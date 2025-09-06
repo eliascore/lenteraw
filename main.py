@@ -21,8 +21,7 @@ def webhook():
     update = Update.de_json(request.get_json(force=True), bot)
     # di sini kamu bisa panggil dispatcher.handle_update(update)
     # kalau pakai telegram.ext 20+ versi, biasanya:
-
-asyncio.run(app_dispatcher.process_update(update))
+    asyncio.run(app_dispatcher.process_update(update))
     return "ok"
 
 
