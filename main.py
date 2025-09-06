@@ -1,9 +1,9 @@
-from flask import Flask
+from flask import Flask, request
 import threading
 
 from telegram.ext import (ApplicationBuilder, CommandHandler,
                           CallbackQueryHandler, MessageHandler, filters)
-
+from telegram import Update
 from config import TOKEN, ADMIN_GROUP_ID
 from db import init_db
 from handlers.start import start
@@ -14,16 +14,16 @@ from handlers.chatbot import handle_bidirectional_reply
 from handlers.chatbot import forward_to_admin
 
 # bikin Flask app
-web_app = Flask('')
+web_app = Flask(__name__)
 
+@web_app.route("/", methods=["POST"])
+def webhook():
+    update = Update.de_json(request.get_json(force=True), bot)
+    # di sini kamu bisa panggil dispatcher.handle_update(update)
+    # kalau pakai telegram.ext 20+ versi, biasanya:
 
-@web_app.route('/')
-def home():
-    return "Bot hidup! ✅"
-
-
-def run_web():
-    web_app.run(host='0.0.0.0', port=8080)
+asyncio.run(app_dispatcher.process_update(update))
+    return "ok"
 
 
 def main():
