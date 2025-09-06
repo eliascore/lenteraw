@@ -9,10 +9,6 @@ ADMIN_GROUP_ID = -1002357906917
 
 bot = Bot(token=TOKEN)
 
-WEBHOOK_URL = "https://lenteraw.onrender.com/"  # sesuaikan endpoint Flask
-bot.set_webhook(WEBHOOK_URL)
-print("Webhook set!")
-
 DB_FILE = "cart.db"
 
 # kata kunci OCR
