@@ -51,8 +51,6 @@ def main():
             & filters.ChatType.PRIVATE,  # semua chat user di private
             forward_to_admin))
 
-    threading.Thread(target=run_web, daemon=True).start()
-
     # jalanin bot di thread utama
     app_bot.run_polling()
 
