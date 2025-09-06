@@ -16,15 +16,6 @@ from handlers.chatbot import forward_to_admin
 # bikin Flask app
 web_app = Flask(__name__)
 
-@web_app.route("/", methods=["POST"])
-def webhook():
-    update = Update.de_json(request.get_json(force=True), bot)
-    # di sini kamu bisa panggil dispatcher.handle_update(update)
-    # kalau pakai telegram.ext 20+ versi, biasanya:
-    asyncio.run(app_dispatcher.process_update(update))
-    return "ok"
-
-
 def main():
     init_db()
     app_bot = ApplicationBuilder().token(TOKEN).build()
@@ -51,7 +42,22 @@ def main():
             & filters.ChatType.PRIVATE,  # semua chat user di private
             forward_to_admin))
 
+@web_app.route("/", methods=["POST"])
+def webhook():
+    update = Update.de_json(request.get_json(force=True), bot)
+    # di sini kamu bisa panggil dispatcher.handle_update(update)
+    # kalau pakai telegram.ext 20+ versi, biasanya:
+    asyncio.run(app_bot.process_update(update))
+    return "ok"
+
+async def set_webhook():
+    WEBHOOK_URL = "https://lenteraw.onrender.com/"  # ganti sesuai URL Render
+    await bot.set_webhook(WEBHOOK_URL)
+    print("[INFO] Webhook Telegram sudah terpasang ✅")
+
 
 
 if __name__ == "__main__":
     main()
+
+asyncio.run(set_webhook())
