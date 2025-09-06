@@ -4,7 +4,7 @@ import threading
 from telegram.ext import (ApplicationBuilder, CommandHandler,
                           CallbackQueryHandler, MessageHandler, filters)
 from telegram import Update
-from config import TOKEN, ADMIN_GROUP_ID
+from config import TOKEN, ADMIN_GROUP_ID, bot
 from db import init_db
 from handlers.start import start
 from handlers.feedback import monitor_feedback
