@@ -51,8 +51,6 @@ def main():
             & filters.ChatType.PRIVATE,  # semua chat user di private
             forward_to_admin))
 
-    # jalanin bot di thread utama
-    app_bot.run_polling()
 
 
 if __name__ == "__main__":
