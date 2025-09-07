@@ -4,7 +4,7 @@ from flask import Flask, request
 from telegram.ext import (ApplicationBuilder, CommandHandler,
                           CallbackQueryHandler, MessageHandler, filters)
 from telegram import Update
-from config import TOKEN, ADMIN_GROUP_ID, bot
+from config import TOKEN, ADMIN_GROUP_ID
 from db import init_db
 from handlers.start import start
 from handlers.feedback import monitor_feedback
@@ -32,7 +32,7 @@ loop.run_until_complete(app_bot.initialize())
 
 @web_app.route("/", methods=["POST"])
 def webhook():
-    update = Update.de_json(request.get_json(force=True), bot)
+    update = Update.de_json(request.get_json(force=True), app_bot)
     # di sini kamu bisa panggil dispatcher.handle_update(update)
     # kalau pakai telegram.ext 20+ versi, biasanya:
     asyncio.run(app_bot.process_update(update))
