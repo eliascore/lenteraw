@@ -30,23 +30,23 @@ app_bot.add_handler(MessageHandler(filters.TEXT & filters.ChatType.PRIVATE, forw
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(app_bot.initialize())
+loop.run_until_complete(set_webhook())
 
 @web_app.route("/", methods=["POST"])
 def webhook():
     update = Update.de_json(request.get_json(force=True), app_bot.bot)
     # di sini kamu bisa panggil dispatcher.handle_update(update)
     # kalau pakai telegram.ext 20+ versi, biasanya:
-    asyncio.run(app_bot.process_update(update))
+    asyncio.create_task(app_bot.process_update(update))
     return "ok"
 
 async def set_webhook():
     WEBHOOK_URL = "https://lenteraw.onrender.com/"  # ganti sesuai URL Render
-    await bot.set_webhook(WEBHOOK_URL)
+    await app_bot.bot.set_webhook(WEBHOOK_URL)
     print("[INFO] Webhook Telegram sudah terpasang ✅")
 
 
 if __name__ == "__main__":
     init_db()
-    asyncio.run(set_webhook())
     port = int(os.environ.get("PORT", 8080))
     web_app.run(host="0.0.0.0", port=port)
