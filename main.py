@@ -32,7 +32,7 @@ print("Bot polling...")
 app_bot.start_polling()
 app_bot.idle()
 
-'''''
+
 async def set_webhook():
     WEBHOOK_URL = "https://lenteraw.onrender.com/"  # ganti sesuai URL Render
     await app_bot.bot.set_webhook(WEBHOOK_URL)
@@ -56,5 +56,3 @@ if __name__ == "__main__":
 
     port = int(os.environ.get("PORT", 8080))
     web_app.run(host="0.0.0.0", port=port)
-
-'''''
