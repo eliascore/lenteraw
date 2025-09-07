@@ -26,6 +26,8 @@ print("[DEBUG] Handler handle_bidirectional_reply sudah dipasang.")
 app_bot.add_handler(MessageHandler((filters.PHOTO | filters.Document.IMAGE | (filters.TEXT & filters.CaptionRegex("(?i)bukti pembayaran"))), monitor_feedback))
 app_bot.add_handler(MessageHandler(filters.TEXT & filters.ChatType.PRIVATE, forward_to_admin))
 
+asyncio.run(app_bot.initialize())
+
 @web_app.route("/", methods=["POST"])
 def webhook():
     update = Update.de_json(request.get_json(force=True), bot)
