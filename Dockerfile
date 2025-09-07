@@ -1,6 +1,12 @@
-FROM python:3.11-slim        # pake Python 3.11
-WORKDIR /app                 # masuk ke folder /app di container
-COPY requirements.txt .      # salin requirements.txt ke /app
-RUN pip install -r requirements.txt  # install library di /app
-COPY . .                     # salin semua file project kamu ke /app
-CMD ["python", "main.py"]    # jalankan main.py dari /app
+# pake Python 3.11
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["python", "main.py"]
