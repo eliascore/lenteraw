@@ -19,7 +19,7 @@ app_bot.add_handler(CommandHandler("start", start))
 app_bot.add_handler(CallbackQueryHandler(tombol_handler))
 app_bot.add_handler(CommandHandler("debuggroup", debug_group))
 app_bot.add_handler(MessageHandler(filters.REPLY & (filters.Chat(ADMIN_GROUP_ID) | filters.ChatType.PRIVATE), handle_bidirectional_reply))
-    print("[DEBUG] Handler handle_bidirectional_reply sudah dipasang.")
+print("[DEBUG] Handler handle_bidirectional_reply sudah dipasang.")
 
 # Pastikan handler ini ditambahkan SETELAH app_bot didefinisikan
 app_bot.add_handler(MessageHandler((filters.PHOTO | filters.Document.IMAGE | (filters.TEXT & filters.CaptionRegex("(?i)bukti pembayaran"))), monitor_feedback))
