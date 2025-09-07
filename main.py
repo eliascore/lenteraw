@@ -44,8 +44,7 @@ def webhook():
     return "ok"
 async def set_webhook():
     WEBHOOK_URL = "https://lenteraw.onrender.com/"  # ganti sesuai URL Render
-    await app_bot.bot.set_webhook(WEBHOOK_URL)
-@@ -51,3 +56,5 @@ def webhook():
+    await app_bot.bot.set_webhook(WEBHOOK_URL) @@ -51,3 +56,5 @@ def webhook():
 
     port = int(os.environ.get("PORT", 8080))
     web_app.run(host="0.0.0.0", port=port)
