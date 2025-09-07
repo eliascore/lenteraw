@@ -33,12 +33,12 @@ async def set_webhook():
     await app_bot.bot.set_webhook(WEBHOOK_URL)
     print("[INFO] Webhook Telegram sudah terpasang ✅")
 
+from asgiref.sync import async_to_sync
+
 @web_app.route("/", methods=["POST"])
 def webhook():
     update = Update.de_json(request.get_json(force=True), app_bot.bot)
-    # di sini kamu bisa panggil dispatcher.handle_update(update)
-    # kalau pakai telegram.ext 20+ versi, biasanya:
-    asyncio.create_task(app_bot.process_update(update))
+    async_to_sync(app_bot.process_update)(update)  # jalankan async di sync
     return "ok"
 
 
