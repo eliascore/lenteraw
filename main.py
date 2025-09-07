@@ -12,7 +12,8 @@ from utils import debug_group
 from handlers.tombol import tombol_handler
 from handlers.chatbot import handle_bidirectional_reply, forward_to_admin
 
-
+WEBHOOK_URL = "https://lenteraw.onrender.com"
+PORT = int(os.environ.get("PORT", 8080))
 
 app_bot = ApplicationBuilder().token(TOKEN).build()
 app_bot.add_handler(CommandHandler("start", start))
@@ -27,24 +28,8 @@ app_bot.add_handler(MessageHandler(filters.TEXT & filters.ChatType.PRIVATE, forw
 
 print("Bot polling...")
 
-async def set_webhook():
-    WEBHOOK_URL = "https://lenteraw.onrender.com/"  # ganti sesuai URL Render
-    await app_bot.bot.set_webhook(WEBHOOK_URL)
-    print("[INFO] Webhook Telegram sudah terpasang ✅")
-
-from asgiref.sync import async_to_sync
-
-@web_app.route("/", methods=["POST"])
-def webhook():
-    update = Update.de_json(request.get_json(force=True), app_bot.bot)
-    async_to_sync(app_bot.process_update)(update)  # jalankan async di sync
-    return "ok"
-async def set_webhook():
-    WEBHOOK_URL = "https://lenteraw.onrender.com/"  # ganti sesuai URL Render
-    await app_bot.bot.set_webhook(WEBHOOK_URL)
-
-    port = int(os.environ.get("PORT", 8080))
-    web_app.run(host="0.0.0.0", port=port)
+await app_bot.bot.set_webhook(WEBHOOK_URL)
+await app_bot.run_webhook(listen="0.0.0.0", port=PORT, webhook_url=WEBHOOK_URL)
 
 if __name__ == "__main__":
     init_db()
