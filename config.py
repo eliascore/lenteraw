@@ -1,11 +1,14 @@
 import os
 from telegram import Bot
+from dotenv import load_dotenv
 
-TOKEN = os.getenv("TOKEN", "")
+load_dotenv()
+
+TOKEN = os.getenv("TOKEN")
 if not TOKEN:
   raise ValueError("❌ TOKEN Telegram belum diatur di environment variable.")
 MENU = "https://t.me/developerlentera/4"
-ADMIN_GROUP_ID = -1002357906917
+ADMIN_GROUP_ID = os.getenv("ADMIN_GROUP_ID")
 
 bot = Bot(token=TOKEN)
 
