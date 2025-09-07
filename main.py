@@ -38,6 +38,7 @@ async def set_webhook():
     await bot.set_webhook(WEBHOOK_URL)
     print("[INFO] Webhook Telegram sudah terpasang ✅")
 
+asyncio.run(set_webhook())
+
 if __name__ == "__main__":
     init_db()
-    asyncio.run(set_webhook())
