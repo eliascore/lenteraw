@@ -15,7 +15,7 @@ from handlers.chatbot import handle_bidirectional_reply, forward_to_admin
 # bikin Flask app
 web_app = Flask(__name__)
 
-loop = asyncio.get_event_loop()
+
 
 app_bot = ApplicationBuilder().token(TOKEN).build()
 app_bot.add_handler(CommandHandler("start", start))
@@ -28,11 +28,12 @@ print("[DEBUG] Handler handle_bidirectional_reply sudah dipasang.")
 app_bot.add_handler(MessageHandler((filters.PHOTO | filters.Document.IMAGE | (filters.TEXT & filters.CaptionRegex("(?i)bukti pembayaran"))), monitor_feedback))
 app_bot.add_handler(MessageHandler(filters.TEXT & filters.ChatType.PRIVATE, forward_to_admin))
 
+loop = asyncio.get_event_loop()
 loop.run_until_complete(app_bot.initialize())
 
 @web_app.route("/", methods=["POST"])
 def webhook():
-    update = Update.de_json(request.get_json(force=True), app_bot)
+    update = Update.de_json(request.get_json(force=True), app_bot.bot)
     # di sini kamu bisa panggil dispatcher.handle_update(update)
     # kalau pakai telegram.ext 20+ versi, biasanya:
     asyncio.run(app_bot.process_update(update))
