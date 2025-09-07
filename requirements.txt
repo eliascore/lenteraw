@@ -1,5 +1,5 @@
 aiolimiter==1.1.1
-anyio==4.10.0
+anyio>=3.7.0
 APScheduler==3.10.4
 blinker==1.9.0
 cachetools==5.3.3
@@ -9,7 +9,7 @@ click==8.2.1
 Flask==3.1.2
 h11==0.14.0
 httpcore==0.17.3
-httpx==0.24.1
+httpx>=0.26.0
 idna==3.10
 itsdangerous==2.2.0
 Jinja2==3.1.6
@@ -17,7 +17,7 @@ MarkupSafe==3.0.2
 packaging==25.0
 pillow==10.4.0
 pytesseract==0.3.13
-python-telegram-bot==20.4
+python-telegram-bot>=20.5
 pytz==2025.2
 qrcode==8.2
 requests==2.32.5
