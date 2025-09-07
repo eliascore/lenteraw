@@ -28,9 +28,10 @@ print("[DEBUG] Handler handle_bidirectional_reply sudah dipasang.")
 app_bot.add_handler(MessageHandler((filters.PHOTO | filters.Document.IMAGE | (filters.TEXT & filters.CaptionRegex("(?i)bukti pembayaran"))), monitor_feedback))
 app_bot.add_handler(MessageHandler(filters.TEXT & filters.ChatType.PRIVATE, forward_to_admin))
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(app_bot.initialize())
-loop.run_until_complete(set_webhook())
+async def set_webhook():
+    WEBHOOK_URL = "https://lenteraw.onrender.com/"  # ganti sesuai URL Render
+    await app_bot.bot.set_webhook(WEBHOOK_URL)
+    print("[INFO] Webhook Telegram sudah terpasang ✅")
 
 @web_app.route("/", methods=["POST"])
 def webhook():
@@ -40,13 +41,13 @@ def webhook():
     asyncio.create_task(app_bot.process_update(update))
     return "ok"
 
-async def set_webhook():
-    WEBHOOK_URL = "https://lenteraw.onrender.com/"  # ganti sesuai URL Render
-    await app_bot.bot.set_webhook(WEBHOOK_URL)
-    print("[INFO] Webhook Telegram sudah terpasang ✅")
-
 
 if __name__ == "__main__":
     init_db()
+    # jalankan bot di background thread
+    import threading
+    threading.Thread(target=lambda: asyncio.run(app_bot.initialize())).start()
+    threading.Thread(target=lambda: asyncio.run(set_webhook())).start()
+
     port = int(os.environ.get("PORT", 8080))
     web_app.run(host="0.0.0.0", port=port)
