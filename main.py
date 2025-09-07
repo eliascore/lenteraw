@@ -12,9 +12,6 @@ from utils import debug_group
 from handlers.tombol import tombol_handler
 from handlers.chatbot import handle_bidirectional_reply, forward_to_admin
 
-# bikin Flask app
-web_app = Flask(__name__)
-
 
 
 app_bot = ApplicationBuilder().token(TOKEN).build()
