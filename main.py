@@ -1,6 +1,6 @@
 import asyncio
 import os
-from flask import Flask, request
+
 from telegram.ext import (ApplicationBuilder, CommandHandler,
                           CallbackQueryHandler, MessageHandler, filters)
 from telegram import Update
@@ -48,3 +48,4 @@ async def set_webhook():
 
 if __name__ == "__main__":
     init_db()
+    asyncio.run(main())
