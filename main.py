@@ -29,9 +29,6 @@ app_bot.add_handler(MessageHandler((filters.PHOTO | filters.Document.IMAGE | (fi
 app_bot.add_handler(MessageHandler(filters.TEXT & filters.ChatType.PRIVATE, forward_to_admin))
 
 print("Bot polling...")
-app_bot.start_polling()
-app_bot.idle()
-
 
 async def set_webhook():
     WEBHOOK_URL = "https://lenteraw.onrender.com/"  # ganti sesuai URL Render
@@ -45,14 +42,13 @@ def webhook():
     update = Update.de_json(request.get_json(force=True), app_bot.bot)
     async_to_sync(app_bot.process_update)(update)  # jalankan async di sync
     return "ok"
-
-
-if __name__ == "__main__":
-    init_db()
-    # jalankan bot di background thread
-    import threading
-    threading.Thread(target=lambda: asyncio.run(app_bot.initialize())).start()
-    threading.Thread(target=lambda: asyncio.run(set_webhook())).start()
+async def set_webhook():
+    WEBHOOK_URL = "https://lenteraw.onrender.com/"  # ganti sesuai URL Render
+    await app_bot.bot.set_webhook(WEBHOOK_URL)
+@@ -51,3 +56,5 @@ def webhook():
 
     port = int(os.environ.get("PORT", 8080))
     web_app.run(host="0.0.0.0", port=port)
+
+if __name__ == "__main__":
+    init_db()
