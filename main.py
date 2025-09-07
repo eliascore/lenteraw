@@ -15,7 +15,7 @@ from handlers.chatbot import handle_bidirectional_reply, forward_to_admin
 WEBHOOK_URL = "https://lenteraw.onrender.com"
 PORT = int(os.environ.get("PORT", 8080))
 
-async def main():
+def main():
     init_db()
     app_bot = ApplicationBuilder().token(TOKEN).build()
 
@@ -37,13 +37,11 @@ async def main():
     ))
 
     # Set webhook & run
-    await app_bot.bot.set_webhook(WEBHOOK_URL)
-    print("[INFO] Webhook Telegram sudah terpasang ✅")
-    await app_bot.run_webhook(
+    app_bot.run_webhook(
         listen="0.0.0.0",
         port=PORT,
         webhook_url=WEBHOOK_URL
     )
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
