@@ -1,4 +1,5 @@
 import asyncio
+import os
 from flask import Flask, request
 from telegram.ext import (ApplicationBuilder, CommandHandler,
                           CallbackQueryHandler, MessageHandler, filters)
@@ -38,7 +39,9 @@ async def set_webhook():
     await bot.set_webhook(WEBHOOK_URL)
     print("[INFO] Webhook Telegram sudah terpasang ✅")
 
-asyncio.run(set_webhook())
 
 if __name__ == "__main__":
     init_db()
+    asyncio.run(set_webhook())
+    port = int(os.environ.get("PORT", 8080))
+    web_app.run(host="0.0.0.0", port=port)
