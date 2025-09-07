@@ -28,7 +28,10 @@ app_bot.add_handler(MessageHandler(filters.TEXT & filters.ChatType.PRIVATE, forw
 
 print("Bot polling...")
 
+print("[INFO] Setting webhook...")
 await app_bot.bot.set_webhook(WEBHOOK_URL)
+
+print(f"[INFO] Starting webhook listener on 0.0.0.0:{PORT}")
 await app_bot.run_webhook(listen="0.0.0.0", port=PORT, webhook_url=WEBHOOK_URL)
 
 if __name__ == "__main__":
